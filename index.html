@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bezahlen, Senden und Sammeln</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Bezahlen, senden und sammeln - ganz einfach privat, geschäftlich</h1>
+        <nav>
+            <button id="loginBtn">Anmelden</button>
+            <button id="registerBtn">Registrieren</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="balanceSection">
+            <h2>Guthaben</h2>
+            <p id="balanceAmount">€100,00</p>
+        </section>
+
+        <section id="transactionHistory">
+            <h2>Transaktionsverlauf</h2>
+            <ul id="transactionList">
+                <li>Transaktion 1</li>
+                <li>Transaktion 2</li>
+            </ul>
+        </section>
+
+        <section id="sendMoney">
+            <h2>Senden</h2>
+            <input type="text" id="recipient" placeholder="Empfänger @Name">
+            <button id="sendBtn">Senden</button>
+        </section>
+
+        <section id="profileSection">
+            <h2>Profil bearbeiten</h2>
+            <form id="profileForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+                <label for="profilePicture">Profilbild:</label>
+                <input type="file" id="profilePicture" name="profilePicture">
+                <button type="submit">Speichern</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
