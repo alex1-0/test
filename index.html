@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bezahlen, Senden und Sammeln</title>
+    <title>black.com</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Bezahlen, senden und sammeln - ganz einfach privat, geschäftlich</h1>
+        <img src="icon.png" alt="Logo" id="logo">
         <nav>
             <button id="loginBtn">Anmelden</button>
             <button id="registerBtn">Registrieren</button>
@@ -16,9 +16,35 @@
     </header>
 
     <main>
+        <section id="heroSection">
+            <h1>Internationale Überweisungen - schnell und einfach</h1>
+        </section>
+
+        <section id="featuresSection">
+            <div class="feature">
+                <img src="feature1.png" alt="Feature 1">
+                <p>Sicherer Serverstandort in der Schweiz</p>
+            </div>
+            <div class="feature">
+                <img src="feature2.png" alt="Feature 2">
+                <p>Zero-Access-Verschlüsselung</p>
+            </div>
+            <div class="feature">
+                <img src="feature3.png" alt="Feature 3">
+                <p>2FA-Authentifizierung</p>
+            </div>
+        </section>
+
         <section id="balanceSection">
             <h2>Guthaben</h2>
-            <p id="balanceAmount">€100,00</p>
+            <p id="balanceAmount">€0,00</p>
+        </section>
+
+        <section id="sendMoney">
+            <h2>Geld senden</h2>
+            <input type="text" id="recipient" placeholder="Empfänger @Name">
+            <input type="number" id="amount" placeholder="Betrag">
+            <button id="sendBtn">Senden</button>
         </section>
 
         <section id="transactionHistory">
@@ -26,13 +52,6 @@
             <ul id="transactionList">
                 <!-- Transactions will be populated here -->
             </ul>
-        </section>
-
-        <section id="sendMoney">
-            <h2>Senden</h2>
-            <input type="text" id="recipient" placeholder="Empfänger @Name">
-            <input type="number" id="amount" placeholder="Betrag">
-            <button id="sendBtn">Senden</button>
         </section>
 
         <section id="profileSection">
@@ -47,14 +66,11 @@
                 <button type="submit">Speichern</button>
             </form>
         </section>
-
-        <section id="accountsSection">
-            <h2>Alle Konten</h2>
-            <ul id="accountsList">
-                <!-- Accounts will be populated here -->
-            </ul>
-        </section>
     </main>
+
+    <footer>
+        <p>&copy; 2023 black.com</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
