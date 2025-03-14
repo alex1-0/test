@@ -9,7 +9,13 @@ header {
     background-color: #333;
     color: white;
     padding: 10px 20px;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo {
+    height: 50px;
 }
 
 nav button {
@@ -33,8 +39,22 @@ section {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+h1, h2 {
     margin-top: 0;
+}
+
+#featuresSection {
+    display: flex;
+    justify-content: space-around;
+}
+
+.feature {
+    text-align: center;
+}
+
+.feature img {
+    width: 100px;
+    height: 100px;
 }
 
 input, button {
@@ -60,16 +80,23 @@ button:hover {
     font-weight: bold;
 }
 
-#transactionList, #accountsList {
+#transactionList {
     list-style-type: none;
     padding: 0;
 }
 
-#transactionList li, #accountsList li {
+#transactionList li {
     padding: 10px;
     border-bottom: 1px solid #eee;
 }
 
-#transactionList li:last-child, #accountsList li:last-child {
+#transactionList li:last-child {
     border-bottom: none;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
 }
