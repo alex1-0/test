@@ -3,76 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EastUnion</title>
+    <title>Finanzsimulation</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <img src="Logo.png" alt="Logo" id="logo">
-        <nav>
+        <img src="Logo.png" alt="Logo" class="logo">
+        <div class="auth-buttons">
             <button id="loginBtn">Anmelden</button>
             <button id="registerBtn">Registrieren</button>
-        </nav>
+        </div>
     </header>
 
     <main>
-        <section id="heroSection">
-            <h1>Internationale Überweisungen - schnell und einfach</h1>
-        </section>
-
-        <section id="featuresSection">
-            <div class="feature">
-                <img src="Inf.png" alt="Sicherer Serverstandort">
-                <p>Sicherer Serverstandort in der Schweiz</p>
+        <!-- Startseite -->
+        <section id="home">
+            <h1>Bezahlen, senden und sammeln - ganz einfach privat und geschäftlich</h1>
+            <div class="image-container">
+                <img src="a.png" alt="Bild A">
+                <img src="b.png" alt="Bild B">
+                <img src="c.png" alt="Bild C">
             </div>
-            <div class="feature">
-                <img src="Nur.png" alt="Zero-Access-Verschlüsselung">
-                <p>Zero-Access-Verschlüsselung</p>
+            <p class="disclaimer">Hinweis: Dies ist eine Simulation. Es handelt sich nicht um echtes Geld.</p>
+        </section>
+
+        <!-- Anmeldeformular -->
+        <section id="login" class="hidden">
+            <h2>Anmelden</h2>
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="E-Mail" required>
+                <input type="password" id="loginPassword" placeholder="Passwort" required>
+                <button type="submit">Anmelden</button>
+            </form>
+        </section>
+
+        <!-- Registrierungsformular -->
+        <section id="register" class="hidden">
+            <h2>Registrieren</h2>
+            <form id="registerForm">
+                <input type="text" id="registerName" placeholder="Name" required>
+                <input type="email" id="registerEmail" placeholder="E-Mail" required>
+                <input type="password" id="registerPassword" placeholder="Passwort" required>
+                <input type="text" id="registerProfilePicture" placeholder="Profilbild-URL" required>
+                <button type="submit">Registrieren</button>
+            </form>
+        </section>
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="hidden">
+            <h2>Dashboard</h2>
+            <div class="balance">
+                <h3>Guthaben: <span id="userBalance">0.00 €</span></h3>
             </div>
-            <div class="feature">
-                <img src="2FA.png" alt="2FA-Authentifizierung">
-                <p>2FA-Authentifizierung</p>
+            <div class="transaction-history">
+                <h3>Transaktionsverlauf</h3>
+                <ul id="transactionList"></ul>
             </div>
+            <div class="send-money">
+                <h3>Geld senden</h3>
+                <input type="text" id="searchUser" placeholder="Empfänger suchen...">
+                <ul id="userList"></ul>
+                <input type="number" id="sendAmount" placeholder="Betrag" required>
+                <button id="sendMoneyBtn">Senden</button>
+            </div>
+            <button id="settingsBtn">Einstellungen</button>
         </section>
 
-        <section id="balanceSection">
-            <h2>Guthaben</h2>
-            <p id="balanceAmount">€0,00</p>
-        </section>
-
-        <section id="sendMoney">
-            <h2>Geld senden</h2>
-            <input type="text" id="recipient" placeholder="Empfänger @Name">
-            <input type="number" id="amount" placeholder="Betrag">
-            <button id="sendBtn">Senden</button>
-        </section>
-
-        <section id="transactionHistory">
-            <h2>Transaktionsverlauf</h2>
-            <ul id="transactionList">
-                <!-- Transactions will be populated here -->
-            </ul>
-        </section>
-
-        <section id="profileSection">
-            <h2>Profil bearbeiten</h2>
-            <form id="profileForm">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email">
-                <label for="profilePicture">Profilbild:</label>
-                <input type="file" id="profilePicture" name="profilePicture">
+        <!-- Einstellungen -->
+        <section id="settings" class="hidden">
+            <h2>Einstellungen</h2>
+            <form id="settingsForm">
+                <input type="text" id="settingsName" placeholder="Name" required>
+                <input type="password" id="settingsPassword" placeholder="Neues Passwort" required>
                 <button type="submit">Speichern</button>
             </form>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2023 EastUnion</p>
-    </footer>
-
-    <!-- Skript als Modul -->
-    <script type="module" src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
 </body>
 </html>
