@@ -1,4 +1,3 @@
-// Importiere Supabase-Client
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 const supabaseUrl = 'https://mxxnouarxeonqinbpqic.supabase.co'
@@ -7,17 +6,26 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 // Registrierungsfunktion
 document.getElementById('registerBtn').addEventListener('click', async function() {
+    const name = prompt('Bitte geben Sie Ihren Namen ein:')
     const email = prompt('Bitte geben Sie Ihre E-Mail ein:')
     const password = prompt('Bitte geben Sie Ihr Passwort ein:')
-    if (email && password) {
+    if (name && email && password) {
         const { data, error } = await supabase.auth.signUp({ email, password })
         if (error) {
             alert(`Fehler bei der Registrierung: ${error.message}`)
         } else {
-            alert('Registrierung erfolgreich! Bitte überprüfen Sie Ihre E-Mail zur Bestätigung.')
+            // Speichere den Namen in der accounts-Tabelle
+            const { data: userData, error: userError } = await supabase
+                .from('accounts')
+                .insert([{ email, name, balance: 0.00 }])
+            if (userError) {
+                alert(`Fehler beim Speichern des Namens: ${userError.message}`)
+            } else {
+                alert('Registrierung erfolgreich! Sie können sich jetzt anmelden.')
+            }
         }
     } else {
-        alert('Bitte geben Sie eine E-Mail und ein Passwort ein.')
+        alert('Bitte geben Sie einen Namen, eine E-Mail und ein Passwort ein.')
     }
 })
 
@@ -68,7 +76,7 @@ document.getElementById('sendBtn').addEventListener('click', async function() {
                 if (updateSenderError || updateRecipientError) {
                     alert('Fehler beim Senden des Geldes.')
                 } else {
-                    alert(`€${amount} an ${recipientData[0].email} gesendet.`)
+                    alert(`€${amount} an ${recipientData[0].name} gesendet.`)
                     loadTransactions()
                 }
             } else {
