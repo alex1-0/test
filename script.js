@@ -1,161 +1,102 @@
-// Supabase-Initialisierung
-const supabaseUrl = 'https://mxxnouarxeonqinbpqic.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im14eG5vdWFyeGVvbnFpbmJwcWljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5MDAzMTksImV4cCI6MjA1NzQ3NjMxOX0.K5D6m5G3_EXbiIZaOiPIkGFGeL3cQXCsGTjX1lTqiaA';
-const supabase = supabase.createClient(supabaseUrl, supabaseKey); // Initialisierung an den Anfang stellen
+const supabaseUrl = "https://mxxnouarxeonqinbpqic.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im14eG5vdWFyeGVvbnFpbmJwcWljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5MDAzMTksImV4cCI6MjA1NzQ3NjMxOX0.K5D6m5G3_EXbiIZaOiPIkGFGeL3cQXCsGTjX1lTqiaA";
 
-// DOM-Elemente
-const homeSection = document.getElementById('home');
-const loginSection = document.getElementById('login');
-const registerSection = document.getElementById('register');
-const dashboardSection = document.getElementById('dashboard');
-const settingsSection = document.getElementById('settings');
-const loginBtn = document.getElementById('loginBtn');
-const registerBtn = document.getElementById('registerBtn');
-const loginForm = document.getElementById('loginForm');
-const registerForm = document.getElementById('registerForm');
-const settingsForm = document.getElementById('settingsForm');
-const searchUserInput = document.getElementById('searchUser');
-const userList = document.getElementById('userList');
-const sendMoneyBtn = document.getElementById('sendMoneyBtn');
-const transactionList = document.getElementById('transactionList');
-const userBalance = document.getElementById('userBalance');
-const settingsBtn = document.getElementById('settingsBtn');
+// UI-Elemente abrufen
+const loginBtn = document.getElementById("login-btn");
+const registerBtn = document.getElementById("register-btn");
+const loginForm = document.getElementById("login-form");
+const registerForm = document.getElementById("register-form");
+const authSection = document.getElementById("auth-section");
+const dashboard = document.getElementById("dashboard");
+const mainContent = document.getElementById("main-content");
+const usernameDisplay = document.getElementById("username");
+const balanceDisplay = document.getElementById("balance");
 
 let currentUser = null;
 
-// Event-Listener
-loginBtn.addEventListener('click', () => {
-    homeSection.classList.add('hidden');
-    loginSection.classList.remove('hidden');
+// Login-/Registrierungs-Buttons korrekt anzeigen
+loginBtn.addEventListener("click", () => {
+    authSection.classList.remove("hidden");
+    loginForm.classList.remove("hidden");
+    registerForm.classList.add("hidden");
+    mainContent.classList.add("hidden");
 });
 
-registerBtn.addEventListener('click', () => {
-    homeSection.classList.add('hidden');
-    registerSection.classList.remove('hidden');
+registerBtn.addEventListener("click", () => {
+    authSection.classList.remove("hidden");
+    registerForm.classList.remove("hidden");
+    loginForm.classList.add("hidden");
+    mainContent.classList.add("hidden");
 });
 
-loginForm.addEventListener('submit', async (e) => {
+// Registrierung mit vorheriger Überprüfung
+registerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('email', email)
-        .eq('password', password)
-        .single();
-    if (data) {
-        currentUser = data;
-        showDashboard();
+    const name = document.getElementById("register-name").value;
+    const email = document.getElementById("register-email").value;
+    const password = document.getElementById("register-password").value;
+    const profilePicture = document.getElementById("profile-picture").value;
+
+    // Prüfen, ob E-Mail bereits existiert
+    let { data: existingUser } = await fetchData(`/rest/v1/users?email=eq.${email}&select=id`);
+    if (existingUser.length > 0) {
+        alert("Diese E-Mail wird bereits verwendet.");
+        return;
+    }
+
+    // Neuen Nutzer erstellen
+    const { data, error } = await postData("/rest/v1/users", {
+        name, email, password, profile_picture: profilePicture, balance: 0
+    });
+
+    if (error) {
+        alert("Fehler beim Registrieren.");
     } else {
-        alert('Anmeldung fehlgeschlagen');
+        alert("Erfolgreich registriert!");
+        loginUser(email, password); // Direkt anmelden
     }
 });
 
-registerForm.addEventListener('submit', async (e) => {
+// Anmelden
+loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const name = document.getElementById('registerName').value;
-    const email = document.getElementById('registerEmail').value;
-    const password = document.getElementById('registerPassword').value;
-    const profilePicture = document.getElementById('registerProfilePicture').value;
-    const { data, error } = await supabase
-        .from('users')
-        .insert([{ name, email, password, profile_picture: profilePicture }])
-        .select()
-        .single();
-    if (data) {
-        currentUser = data;
-        showDashboard();
-    } else {
-        alert('Registrierung fehlgeschlagen');
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+
+    let { data: user } = await fetchData(`/rest/v1/users?email=eq.${email}&select=*`);
+
+    if (user.length === 0 || user[0].password !== password) {
+        alert("Falsche Anmeldedaten!");
+        return;
     }
+
+    loginUser(user[0]);
 });
 
-settingsForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = document.getElementById('settingsName').value;
-    const password = document.getElementById('settingsPassword').value;
-    const { data, error } = await supabase
-        .from('users')
-        .update({ name, password })
-        .eq('id', currentUser.id)
-        .select()
-        .single();
-    if (data) {
-        currentUser = data;
-        alert('Einstellungen gespeichert');
-    } else {
-        alert('Fehler beim Speichern');
-    }
-});
+// Benutzer einloggen
+function loginUser(user) {
+    currentUser = user;
+    usernameDisplay.innerText = user.name;
+    balanceDisplay.innerText = user.balance.toFixed(2);
 
-searchUserInput.addEventListener('input', async () => {
-    const searchTerm = searchUserInput.value;
-    const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .ilike('name', `%${searchTerm}%`);
-    if (data) {
-        userList.innerHTML = data.map(user => `<li data-id="${user.id}">${user.name}</li>`).join('');
-    }
-});
+    // UI umschalten
+    authSection.classList.add("hidden");
+    mainContent.classList.add("hidden");
+    dashboard.classList.remove("hidden");
 
-sendMoneyBtn.addEventListener('click', async () => {
-    const receiverId = userList.querySelector('li[data-id]')?.dataset.id;
-    const amount = parseFloat(document.getElementById('sendAmount').value);
-    if (receiverId && amount) {
-        const { data, error } = await supabase
-            .from('transactions')
-            .insert([{ sender_id: currentUser.id, receiver_id: receiverId, amount }])
-            .select();
-        if (data) {
-            updateBalance();
-            loadTransactions();
-        } else {
-            alert('Fehler beim Senden');
-        }
-    }
-});
-
-settingsBtn.addEventListener('click', () => {
-    dashboardSection.classList.add('hidden');
-    settingsSection.classList.remove('hidden');
-});
-
-// Funktionen
-function showDashboard() {
-    loginSection.classList.add('hidden');
-    registerSection.classList.add('hidden');
-    homeSection.classList.add('hidden');
-    dashboardSection.classList.remove('hidden');
-    updateBalance();
-    loadTransactions();
+    loadUserList();
 }
 
-async function updateBalance() {
-    const { data, error } = await supabase
-        .from('users')
-        .select('balance')
-        .eq('id', currentUser.id)
-        .single();
-    if (data) {
-        userBalance.textContent = `${data.balance.toFixed(2)} €`;
-    }
+// Hilfsfunktionen für API-Anfragen
+async function fetchData(endpoint) {
+    const res = await fetch(supabaseUrl + endpoint, { headers: { "apikey": supabaseKey } });
+    return res.json();
 }
 
-async function loadTransactions() {
-    const { data, error } = await supabase
-        .from('transactions')
-        .select('*')
-        .or(`sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`)
-        .order('timestamp', { ascending: false })
-        .limit(5);
-    if (data) {
-        transactionList.innerHTML = data.map(transaction => `
-            <li>
-                ${transaction.sender_id === currentUser.id ? 'Gesendet' : 'Erhalten'}: 
-                ${transaction.amount.toFixed(2)} €
-            </li>
-        `).join('');
-    }
+async function postData(endpoint, body) {
+    return await fetch(supabaseUrl + endpoint, { 
+        method: "POST", 
+        headers: { "Content-Type": "application/json", "apikey": supabaseKey },
+        body: JSON.stringify(body) 
+    }).then(res => res.json());
 }
