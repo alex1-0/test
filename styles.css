@@ -1,51 +1,62 @@
 body {
-  background-color: black;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
 }
 
 header {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
 }
 
 .logo {
-  height: 50px;
+    height: 50px;
 }
 
 .buttons button {
-  background: gray;
-  border: none;
-  color: white;
-  padding: 10px;
-  cursor: pointer;
+    background: gray;
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
 }
 
 .image-section {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    margin-top: 20px;
 }
 
 .image-container {
-  text-align: center;
+    text-align: center;
+    width: 220px; /* Breite fixieren, damit alles gleich bleibt */
+    position: relative;
 }
 
 .image-container img {
-  width: 150px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
 }
 
 .image-container p {
-  margin-top: 10px;
-  font-weight: bold;
+    position: absolute;
+    bottom: -30px; /* Fixierte Höhe unter den Bildern */
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    font-size: 16px;
+    width: 100%; /* Damit der Text sauber in der Mitte bleibt */
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
