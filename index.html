@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Simulation</title>
+    <title>Payment Service</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,53 +14,45 @@
             <button id="register-btn">Registrieren</button>
         </div>
     </header>
-    
+
     <main id="main-content">
-        <h1>Bezahlen, senden und sammeln – ganz einfach privat und geschäftlich</h1>
-        <div class="images">
-            <img src="a.png" alt="Image A">
-            <img src="b.png" alt="Image B">
-            <img src="c.png" alt="Image C">
+        <h2>Privat und Geschäftlich</h2>
+        <h1>Bezahlen, senden und sammeln - ganz einfach</h1>
+        <p>Empfangen - </p>
+        <p>Mit unserem Service kannst du Zahlungen sicher und schnell senden und empfangen.</p>
+
+        <div class="image-section">
+            <div class="image-container">
+                <img src="a.png" alt="International">
+                <p>International</p>
+            </div>
+            <div class="image-container">
+                <img src="b.png" alt="Sicherheit">
+                <p>Vor Dritte gesichert</p>
+            </div>
+            <div class="image-container">
+                <img src="c.png" alt="Schnelle Überweisungen">
+                <p>Schnelle Überweisungen</p>
+            </div>
         </div>
     </main>
 
-    <div id="auth-section" class="hidden">
+    <section id="auth-section" class="hidden">
         <form id="login-form" class="hidden">
             <h2>Anmelden</h2>
-            <input type="email" id="login-email" placeholder="E-Mail">
-            <input type="password" id="login-password" placeholder="Passwort">
-            <button type="submit">Anmelden</button>
+            <input type="email" id="login-email" placeholder="E-Mail" required>
+            <input type="password" id="login-password" placeholder="Passwort" required>
+            <button type="submit">Einloggen</button>
         </form>
 
         <form id="register-form" class="hidden">
             <h2>Registrieren</h2>
-            <input type="text" id="register-name" placeholder="Name">
-            <input type="email" id="register-email" placeholder="E-Mail">
-            <input type="password" id="register-password" placeholder="Passwort">
-            <input type="text" id="profile-picture" placeholder="Profilbild-URL">
+            <input type="text" id="register-name" placeholder="Name" required>
+            <input type="email" id="register-email" placeholder="E-Mail" required>
+            <input type="password" id="register-password" placeholder="Passwort" required>
             <button type="submit">Registrieren</button>
         </form>
-    </div>
-
-    <div id="dashboard" class="hidden">
-        <h2>Willkommen, <span id="username"></span></h2>
-        <p>Guthaben: <span id="balance">0.00</span>€</p>
-
-        <h3>Geld senden</h3>
-        <input type="text" id="recipient" placeholder="Empfänger suchen">
-        <div id="user-list"></div>
-        <input type="number" id="amount" placeholder="Betrag">
-        <button id="send-money">Senden</button>
-
-        <h3>Transaktionsverlauf</h3>
-        <ul id="transaction-history"></ul>
-
-        <button id="settings-btn">Einstellungen</button>
-    </div>
-
-    <footer>
-        <p>Dies ist nur eine Simulation und kein echtes Geld.</p>
-    </footer>
+    </section>
 
     <script src="script.js"></script>
 </body>
