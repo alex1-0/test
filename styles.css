@@ -37,6 +37,7 @@ header {
     text-align: center;
     width: 220px; /* Breite fixieren, damit alles gleich bleibt */
     position: relative;
+    padding-bottom: 40px; /* Mehr Platz nach unten für die Texte */
 }
 
 .image-container img {
@@ -49,12 +50,12 @@ header {
 
 .image-container p {
     position: absolute;
-    bottom: -30px; /* Fixierte Höhe unter den Bildern */
+    bottom: -50px; /* Abstand nach unten erhöht */
     left: 50%;
     transform: translateX(-50%);
     font-weight: bold;
     font-size: 16px;
-    width: 100%; /* Damit der Text sauber in der Mitte bleibt */
+    width: 100%;
 }
 
 .hidden {
